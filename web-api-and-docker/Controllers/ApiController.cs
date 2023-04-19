@@ -50,5 +50,20 @@ namespace web_api_and_docker.Controllers
                 return Content(html, "text/html");
             }
         }
+
+        [Route("headers")]
+        [HttpGet]
+        public IActionResult GetHeaders()
+        {
+            var headers = HttpContext.Request.Headers;
+            var headerList = new List<KeyValuePair<string, string>>();
+
+            foreach (var header in headers)
+            {
+                headerList.Add(new KeyValuePair<string, string>(header.Key, header.Value));
+            }
+
+            return Ok(headerList);
+        }
     }
 }
