@@ -55,15 +55,26 @@ namespace web_api_and_docker.Controllers
         [HttpGet]
         public IActionResult GetHeaders()
         {
+            var format = Request.Query["format"].ToString().ToLower();
             var headers = HttpContext.Request.Headers;
-            var headerList = new List<KeyValuePair<string, string>>();
 
-            foreach (var header in headers)
+            if (format == "json")
             {
-                headerList.Add(new KeyValuePair<string, string>(header.Key, header.Value));
+                return Ok(headers);
             }
+            else if (format == "xml")
+            {
+                var xml = new XElement("headers", headers.Select(h => new XElement(h.Key.Replace(':', '_'), h.Value)));
 
-            return Ok(headerList);
+                return Content(xml.ToString(), "application/xml");
+            }
+            else
+            {
+                var headerDictionary = headers.ToDictionary(h => h.Key, h => h.Value.ToString());
+                var html = _jsonFileFormatTools.CreateBigHtmlStingFile(headerDictionary);
+
+                return Content(html, "text/html");
+            }
         }
     }
 }
