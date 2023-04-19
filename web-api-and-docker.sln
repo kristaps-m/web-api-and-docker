@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "web-api-and-docker", "web-api-and-docker\web-api-and-docker.csproj", "{FB854593-A084-4C3D-8029-7DC4881F4B56}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParseTools", "ParseTools\ParseTools.csproj", "{ECE183A5-361F-497C-B476-74BD498F7D3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{FB854593-A084-4C3D-8029-7DC4881F4B56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB854593-A084-4C3D-8029-7DC4881F4B56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB854593-A084-4C3D-8029-7DC4881F4B56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECE183A5-361F-497C-B476-74BD498F7D3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECE183A5-361F-497C-B476-74BD498F7D3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECE183A5-361F-497C-B476-74BD498F7D3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECE183A5-361F-497C-B476-74BD498F7D3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

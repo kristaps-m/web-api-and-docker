@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using ParseTools;
 using System.Collections;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace web_api_and_docker.Controllers
 {
@@ -7,6 +11,13 @@ namespace web_api_and_docker.Controllers
     [ApiController]
     public class ApiController : ControllerBase
     {
+        private readonly IJsonFileFormatTools _jsonFileFormatTools;
+
+        public ApiController(IJsonFileFormatTools jsonFileFormatTools)
+        {
+            _jsonFileFormatTools = jsonFileFormatTools;
+        }
+
         [Route("/")]
         [HttpGet]
         public IActionResult GetRootPath()
@@ -17,17 +28,27 @@ namespace web_api_and_docker.Controllers
         [Route("environment")]
         [HttpGet]
         public IActionResult GetEnvironmentVariables()
-        {           
+        {
+            var format = Request.Query["format"].ToString().ToLower();
             IDictionary environment_vars = Environment.GetEnvironmentVariables();
 
-            var variablesList = new List<KeyValuePair<object, object>>();
-
-            foreach (DictionaryEntry variable in environment_vars)
+            if (format == "json")
             {
-                variablesList.Add(new KeyValuePair<object, object>(variable.Key, variable.Value));
+                return Ok(environment_vars);
             }
+            else if (format == "xml")
+            {
+                string bigJsonString = _jsonFileFormatTools.SimpleJsonToString(environment_vars).Replace("\\", "\\\\");
+                XmlDocument xmlDocument = JsonConvert.DeserializeXmlNode(bigJsonString, "root");
 
-            return Ok(variablesList);
+                return Content(xmlDocument.OuterXml, "application/xml");
+            }
+            else
+            {
+                var html = _jsonFileFormatTools.CreateBigHtmlStingFile(environment_vars);
+
+                return Content(html, "text/html");
+            }
         }
     }
 }
