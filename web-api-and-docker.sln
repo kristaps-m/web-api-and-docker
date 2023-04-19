@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "web-api-and-docker", "web-a
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParseTools", "ParseTools\ParseTools.csproj", "{ECE183A5-361F-497C-B476-74BD498F7D3B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "web-api-and-docker.Data", "web-api-and-docker.Data\web-api-and-docker.Data.csproj", "{AD485223-AEBE-4677-9940-78B426FBD4F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{ECE183A5-361F-497C-B476-74BD498F7D3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECE183A5-361F-497C-B476-74BD498F7D3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECE183A5-361F-497C-B476-74BD498F7D3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD485223-AEBE-4677-9940-78B426FBD4F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD485223-AEBE-4677-9940-78B426FBD4F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD485223-AEBE-4677-9940-78B426FBD4F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD485223-AEBE-4677-9940-78B426FBD4F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

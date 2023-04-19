@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ParseTools\ParseTools.csproj" />
+    <ProjectReference Include="..\web-api-and-docker.Data\web-api-and-docker.Data.csproj" />
   </ItemGroup>
 
 </Project>

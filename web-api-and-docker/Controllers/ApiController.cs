@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ParseTools;
 using System.Collections;
@@ -79,6 +80,7 @@ namespace web_api_and_docker.Controllers
             }
         }
 
+        [Authorize]
         [Route("post")]
         [HttpPost]
         public async Task<IActionResult> Post()
@@ -112,6 +114,7 @@ namespace web_api_and_docker.Controllers
             }
         }
 
+        [Authorize]
         [Route("post")]
         [HttpDelete]
         [HttpGet]

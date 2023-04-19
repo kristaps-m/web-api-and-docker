@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.Authentication;
 using ParseTools;
+using web_api_and_docker.Data;
+using web_api_and_docker.Handler;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IJsonFileFormatTools, JsonFileFormatTools>();
+builder.Services.AddAuthentication("BasicAuthentication")
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+builder.Services.AddSingleton<ICredentialsStorage, CredentialsStorage>();
+builder.Services.AddSingleton<IStringDecoding, StringDecoding>();
 
 var app = builder.Build();
 
@@ -21,6 +28,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication(); // BasicAuthentication
 app.UseAuthorization();
 
 app.MapControllers();
