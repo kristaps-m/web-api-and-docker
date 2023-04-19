@@ -2,6 +2,8 @@
 using Newtonsoft.Json;
 using ParseTools;
 using System.Collections;
+using System.Net;
+using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -72,6 +74,39 @@ namespace web_api_and_docker.Controllers
             {
                 var headerDictionary = headers.ToDictionary(h => h.Key, h => h.Value.ToString());
                 var html = _jsonFileFormatTools.CreateBigHtmlStingFile(headerDictionary);
+
+                return Content(html, "text/html");
+            }
+        }
+
+        [Route("post")]
+        [HttpPost]
+        public async Task<IActionResult> Post()
+        {
+            var format = Request.Query["format"].ToString().ToLower();
+            string body = await new StreamReader(Request.Body, Encoding.UTF8).ReadToEndAsync();
+
+            if (string.IsNullOrWhiteSpace(body))
+            {
+                return BadRequest("Request body is empty or null");
+            }
+
+            if (format == "json")
+            {
+                return Content(body, "application/json");
+            }
+            else if (format == "xml")
+            {
+                XmlDocument xmlDocument = JsonConvert.DeserializeXmlNode(body, "root");
+
+                return Content(xmlDocument.OuterXml, "application/xml");
+            }
+            else
+            {
+                var bodyToIDictionary = JsonConvert.DeserializeObject<IDictionary<string, string>>(body)
+                    .ToDictionary(h => h.Key, h => h.Value.ToString());
+
+                var html = _jsonFileFormatTools.CreateBigHtmlStingFile(bodyToIDictionary);
 
                 return Content(html, "text/html");
             }
