@@ -111,5 +111,17 @@ namespace web_api_and_docker.Controllers
                 return Content(html, "text/html");
             }
         }
+
+        [Route("post")]
+        [HttpDelete]
+        [HttpGet]
+        [HttpHead]
+        [HttpOptions]
+        [HttpPatch]
+        [HttpPut]
+        public IActionResult NotAllowed()
+        {
+            return StatusCode((int)HttpStatusCode.MethodNotAllowed, "Method not allowed");
+        }
     }
 }
