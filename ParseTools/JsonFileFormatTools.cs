@@ -57,7 +57,7 @@ namespace ParseTools
 
             foreach (DictionaryEntry data in dictionary)
             {
-                result.Add($"\"{data.Key}\"" + ":" + $"\"{data.Value}\"");
+                result.Add($"\"{data.Key}\"".Replace(":", "_") + ":" + $"\"{data.Value}\"");
             }
 
             return "{" + string.Join(",", result) + "}";

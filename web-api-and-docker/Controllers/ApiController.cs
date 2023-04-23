@@ -2,11 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ParseTools;
+using ParseTools.returnFormats;
 using System.Collections;
 using System.Net;
 using System.Text;
-using System.Xml;
-using System.Xml.Linq;
 
 namespace web_api_and_docker.Controllers
 {
@@ -30,62 +29,31 @@ namespace web_api_and_docker.Controllers
         
         [Route("environment")]
         [HttpGet]
-        public IActionResult GetEnvironmentVariables()
+        public IActionResult GetEnvironmentVariables(string? format = "html")
         {
-            var format = Request.Query["format"].ToString().ToLower();
             IDictionary environment_vars = Environment.GetEnvironmentVariables();
+            var formatter = FormatFactory.GetFormatter(format);
+            var formattedOutput = formatter.Format(environment_vars);
 
-            if (format == "json")
-            {
-                return Ok(environment_vars);
-            }
-            else if (format == "xml")
-            {
-                string bigJsonString = _jsonFileFormatTools.SimpleJsonToString(environment_vars).Replace("\\", "\\\\");
-                XmlDocument xmlDocument = JsonConvert.DeserializeXmlNode(bigJsonString, "root");
-
-                return Content(xmlDocument.OuterXml, "application/xml");
-            }
-            else
-            {
-                var html = _jsonFileFormatTools.CreateBigHtmlStingFile(environment_vars);
-
-                return Content(html, "text/html");
-            }
+            return Content(formattedOutput, GetContentType(format));
         }
 
         [Route("headers")]
         [HttpGet]
-        public IActionResult GetHeaders()
+        public IActionResult GetHeaders(string? format = "html")
         {
-            var format = Request.Query["format"].ToString().ToLower();
             var headers = HttpContext.Request.Headers;
+            var formatter = FormatFactory.GetFormatter(format);
+            var formattedOutput = formatter.Format(headers);
 
-            if (format == "json")
-            {
-                return Ok(headers);
-            }
-            else if (format == "xml")
-            {
-                var xml = new XElement("headers", headers.Select(h => new XElement(h.Key.Replace(':', '_'), h.Value)));
-
-                return Content(xml.ToString(), "application/xml");
-            }
-            else
-            {
-                var headerDictionary = headers.ToDictionary(h => h.Key, h => h.Value.ToString());
-                var html = _jsonFileFormatTools.CreateBigHtmlStingFile(headerDictionary);
-
-                return Content(html, "text/html");
-            }
+            return Content(formattedOutput, GetContentType(format));
         }
 
         [Authorize]
         [Route("post")]
         [HttpPost]
-        public async Task<IActionResult> Post()
+        public async Task<IActionResult> Post(string? format = "html")
         {
-            var format = Request.Query["format"].ToString().ToLower();
             string body = await new StreamReader(Request.Body, Encoding.UTF8).ReadToEndAsync();
 
             if (string.IsNullOrWhiteSpace(body))
@@ -93,25 +61,12 @@ namespace web_api_and_docker.Controllers
                 return BadRequest("Request body is empty or null");
             }
 
-            if (format == "json")
-            {
-                return Content(body, "application/json");
-            }
-            else if (format == "xml")
-            {
-                XmlDocument xmlDocument = JsonConvert.DeserializeXmlNode(body, "root");
-
-                return Content(xmlDocument.OuterXml, "application/xml");
-            }
-            else
-            {
-                var bodyToIDictionary = JsonConvert.DeserializeObject<IDictionary<string, string>>(body)
+            var formatter = FormatFactory.GetFormatter(format);
+            var bodyToIDictionary = JsonConvert.DeserializeObject<IDictionary<string, string>>(body)
                     .ToDictionary(h => h.Key, h => h.Value.ToString());
+            var formattedOutput = formatter.Format(bodyToIDictionary);
 
-                var html = _jsonFileFormatTools.CreateBigHtmlStingFile(bodyToIDictionary);
-
-                return Content(html, "text/html");
-            }
+            return Content(formattedOutput, GetContentType(format));
         }
 
         [Authorize]
@@ -125,6 +80,21 @@ namespace web_api_and_docker.Controllers
         public IActionResult NotAllowed()
         {
             return StatusCode((int)HttpStatusCode.MethodNotAllowed, "Method not allowed");
+        }
+
+        private string GetContentType(string format)
+        {
+            switch (format.Trim().ToLower())
+            {
+                case "xml":
+                    return "application/xml";
+                case "html":
+                    return "text/html";
+                case "json":
+                    return "application/json";
+                default:
+                    return "text/html";
+            }
         }
     }
 }
