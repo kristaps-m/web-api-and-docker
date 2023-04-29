@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication;
 using ParseTools;
+using ParseTools.returnFormats;
 using web_api_and_docker.Data;
 using web_api_and_docker.Handler;
 
@@ -16,6 +17,8 @@ builder.Services.AddAuthentication("BasicAuthentication")
     .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 builder.Services.AddSingleton<ICredentialsStorage, CredentialsStorage>();
 builder.Services.AddSingleton<IStringDecoding, StringDecoding>();
+builder.Services.AddSingleton<IFormatFactory, FormatFactory>();
+
 
 var app = builder.Build();
 

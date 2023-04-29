@@ -1,9 +1,9 @@
-﻿using System.Collections;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace ParseTools.returnFormats
 {
     public interface IFormatter
     {
-        string Format<T>(T environment_vars);
+        IActionResult Format<T>(T data);
     }
 }
