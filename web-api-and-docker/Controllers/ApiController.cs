@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using ParseTools.returnFormats;
+using ParseTools.Interfaces;
 using System.Collections;
 using System.Net;
 using System.Text;

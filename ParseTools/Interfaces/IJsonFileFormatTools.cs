@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace ParseTools
+namespace ParseTools.Interfaces
 {
     public interface IJsonFileFormatTools
     {

@@ -1,4 +1,6 @@
-﻿namespace ParseTools.returnFormats
+﻿using ParseTools.Interfaces;
+
+namespace ParseTools.returnFormats
 {
     public class FormatFactory: IFormatFactory
     {

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using ParseTools.Interfaces;
+using System.Text;
 
 namespace ParseTools
 {

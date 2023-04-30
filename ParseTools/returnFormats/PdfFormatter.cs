@@ -4,6 +4,7 @@ using PdfSharpCore.Pdf;
 using TheArtOfDev.HtmlRenderer.PdfSharp;
 using System.Collections;
 using Microsoft.AspNetCore.Http;
+using ParseTools.Interfaces;
 
 namespace ParseTools.returnFormats
 {

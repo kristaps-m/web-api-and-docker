@@ -1,4 +1,4 @@
-﻿namespace ParseTools
+﻿namespace ParseTools.Interfaces
 {
     public interface IStringDecoding
     {
