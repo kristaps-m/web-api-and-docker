@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using ParseTools.Interfaces;
 
-namespace ParseTools.returnFormats
+namespace ParseTools.ReturnFormats
 {
     public class JsonFormatter : ControllerBase,IFormatter
     {

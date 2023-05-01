@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ParseTools.Interfaces;
 using System.Collections;
 
-namespace ParseTools.returnFormats
+namespace ParseTools.ReturnFormats
 {
     public class HtmlFormatter : ControllerBase, IFormatter
     {

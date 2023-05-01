@@ -6,7 +6,7 @@ using System.Collections;
 using Microsoft.AspNetCore.Http;
 using ParseTools.Interfaces;
 
-namespace ParseTools.returnFormats
+namespace ParseTools.ReturnFormats
 {
     public class PdfFormatter : ControllerBase, IFormatter
     {

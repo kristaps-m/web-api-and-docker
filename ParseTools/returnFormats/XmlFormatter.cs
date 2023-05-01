@@ -6,7 +6,7 @@ using System.Collections;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace ParseTools.returnFormats
+namespace ParseTools.ReturnFormats
 {
     public class XmlFormatter :ControllerBase, IFormatter
     {
